@@ -164,7 +164,21 @@ WHERE
 	AND 
 	release_year > EXTRACT(YEAR FROM CURRENT_DATE) - 10
 
+--13. Categorize Content Based on the Presence of 'Kill' and 'Violence' Keywords
 
+
+SELECT 
+    category,
+    COUNT(*) AS content_count
+FROM (
+    SELECT 
+        CASE 
+            WHEN description ILIKE '%kill%' OR description ILIKE '%violence%' THEN 'Bad'
+            ELSE 'Good'
+        END AS category
+    FROM netflix
+) AS categorized_content
+GROUP BY category;
 
 
 
